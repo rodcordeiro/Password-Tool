@@ -11,7 +11,7 @@ def make_password():
     # Set the Alphanumeric and extra characters
     alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 'm', "n", 'o', "p", "q", "r", "s", "t", "u", "v", "w", "x", 'y', "z"]
     nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,]
-    chars = ["~", '`', "!", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "{", "}", "[", "]", "|", "\ ", "'", '"', "?", "/", ">", "<", ",","."]
+    chars = ["~", '`', "!", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "{", "}", "[", "]", "|", r"\"", "'", '"', "?", "/", ">", "<", ",","."]
 
     # Set a Password Length
     passwd_length = random.randint(11, 20) + 1
@@ -23,6 +23,7 @@ def make_password():
     # Generate the Password by adding a (random) character to the password
     for i in range(1, passwd_length):
         passwd = passwd + str(random.choice(seq))
+        i += 1
 
     # Return the generated sequence
     return passwd
@@ -107,7 +108,7 @@ def check_password_strength(password):
         # Set up the necessary variables
         alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 'm', "n", 'o', "p", "q", "r", "s", "t", "u", "v", "w", "x", 'y', "z"]
         nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,]
-        chars = ["~", '`', "!", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "{", "}", "[", "]", "|", "\ ", "'", '"', "?", "/", ">", "<", ",","."]
+        chars = ["~", '`', "!", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "{", "}", "[", "]", "|", r"\"", "'", '"', "?", "/", ">", "<", ",","."]
         uppercase = [letter.upper() for letter in alphabet]
 
         # Loop through each Alphanumeric character and check if they are in the pasword
