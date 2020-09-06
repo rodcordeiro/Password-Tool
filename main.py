@@ -1,5 +1,6 @@
 import backend, frontend, sys
-from PyQt5.QtWidgets import QApplication
+
+from PyQt5.QtWidgets import *
 import qdarkgraystyle as dgs
 
 class MainWindow(frontend.Frontend):
@@ -59,7 +60,7 @@ class MainWindow(frontend.Frontend):
 
 app = QApplication(sys.argv)
 window = MainWindow()
-window.setStyleSheet(dgs.load_stylesheet())
+window.setStyle(dgs.load_stylesheet())
 
 window.show()
 app.exec_()

@@ -175,6 +175,8 @@ def make_passphrase(phrase):
     # Then add a random sequence of numbers at the end
     phrase = phrase + random.choice(["-", ""])
     sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-    for i in range(1, 4):
+
+    for num in range(1, random.randrange(1, 3)):
         phrase = phrase + str(random.choice(sequence))
+        num += 1
     return phrase
