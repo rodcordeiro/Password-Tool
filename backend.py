@@ -176,7 +176,10 @@ def make_passphrase(phrase):
     phrase = phrase + random.choice(["-", ""])
     sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 
-    for num in range(1, random.randrange(1, 3)):
+    for num in range(1, random.randrange(1, 5)):
         phrase = phrase + str(random.choice(sequence))
         num += 1
     return phrase
+
+def encrypt(text):
+    """This just encrypts the text using ord"""

@@ -12,6 +12,7 @@ class Frontend(QMainWindow):
         self.password_info = ""
         self.password_output = ""
         self.password_input = ""
+        self.setWindowTitle("Password Tool")
 
         # Create a ToolBar
         toolbar = QToolBar("Menu")

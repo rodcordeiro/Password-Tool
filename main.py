@@ -60,7 +60,7 @@ class MainWindow(frontend.Frontend):
 
 app = QApplication(sys.argv)
 window = MainWindow()
-window.setStyle(dgs.load_stylesheet())
+window.setStyleSheet(dgs.load_stylesheet())
 
 window.show()
 app.exec_()
