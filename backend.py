@@ -32,13 +32,13 @@ def make_password():
 def update_unsafe_passwords_list():
     """Updates the List of Unsafe Passowords by Scraping A Website"""
     try:
-        # Empty the unsafe_passwords.txt file
-        f = open("unsafe_passwords.txt", "w")
+        # Empty the unsafe_passwords.passwd file
+        f = open("unsafe_passwords.passwd", "w")
         f.truncate()
         f.close()
 
         # Open it again
-        f = open("unsafe_passwords.txt", "a")
+        f = open("unsafe_passwords.passwd", "a")
 
         # Get the Website containing the password information
         response = requests.get("https://en.wikipedia.org/wiki/List_of_the_most_common_passwords")
@@ -57,7 +57,10 @@ def update_unsafe_passwords_list():
 
         # Add the list to the unsafe_passwords.text file
         for bad_password in common_passwords:
-            f.write(f"{bad_password}\n")
+            if bad_password in f.read():
+                pass
+            else:
+                f.write(f"{bad_password}\n")
 
     except: # In case it does not work, empty the file
         f.truncate()
@@ -71,11 +74,11 @@ def check_password_strength(password):
     """Checks the Strength of a given password"""
     update_unsafe_passwords_list()
 
-    f = open("unsafe_passwords.txt", "r")
+    f = open("unsafe_passwords.passwd", "r")
 
     safe = True
     unsafe_levels = 0
-    # First Check if the unsafe_passwords.txt file is empty
+    # First Check if the unsafe_passwords.passwd file is empty
     data = f.read()
     # If the Thing is empty
     if data == None or "":
