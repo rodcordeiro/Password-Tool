@@ -181,5 +181,31 @@ def make_passphrase(phrase):
         num += 1
     return phrase
 
-def encrypt(text):
-    """This just encrypts the text using ord"""
+def encrypt(key):
+    """Encrypt a String Value using In-House Encryption"""
+    key_length = len(key)
+    key = list(key)
+    for index in range(0, 201):
+        try:
+            key[index] = ord(key[index])
+        except IndexError:
+            if index == key_length:
+                key.append("end")
+            else:
+                key.append(random.randrange(1, 10000))
+    return key
+
+def decrypt(key):
+    """Decrypt the In-House Encrypted Key"""
+    tmp = []
+    for index in range(0, 201):
+        try:
+            tmp.append(chr(key[index]))
+        except TypeError:
+            key = tmp
+            break
+    tmp = ""
+    for char in key:
+        tmp += char
+    key = tmp
+    return key
