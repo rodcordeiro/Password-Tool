@@ -1,6 +1,0 @@
-yo
-jello
-kyle
-and
-labboat
-[1, 2, 3213,4354, 45]

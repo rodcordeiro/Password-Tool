@@ -62,6 +62,9 @@ class MainWindow(frontend.Frontend):
         self.password_info = backend.make_passphrase(self.password_input.text())
         self.password_output.setText(f"Passphrase: {self.password_info}")
 
+    def save_password(self, s):
+        print(self.password_info)
+        #backend.write("passwords.passwd", self.password_output.text())
 app = QApplication(sys.argv)
 window = MainWindow()
 window.setStyleSheet(dgs.load_stylesheet())

@@ -28,7 +28,6 @@ def make_password():
     # Return the generated sequence
     return passwd
 
-
 def update_unsafe_passwords_list():
     """Updates the List of Unsafe Passowords by Scraping A Website"""
     try:
@@ -68,7 +67,6 @@ def update_unsafe_passwords_list():
 
     finally: # Close the file
         f.close()
-
 
 def check_password_strength(password):
     """Checks the Strength of a given password"""
@@ -160,13 +158,15 @@ def check_password_strength(password):
                 break # End that check
 
     return (safe, unsafe_levels)
-
     
 def make_passphrase(phrase):
 
     """This Turns a phrase Into a Passphrase"""
 
     # Capitalize the Beginning of the Phrase
+    if len(phrase) == 0: or None:
+        return "Empty"
+        
     ender = phrase[1:len(phrase)]
     phrase = phrase[0].upper() + ender
 
@@ -216,7 +216,7 @@ def decrypt(key):
 def write(fname, text):
     """Writes the text to a filename"""
     f = open("fname", 'a')
-    f.write(repr(text) + "\n")
+    f.write(f"{repr(text)}\n")
     f.close()
 
 def get_file_content(filename):
@@ -231,5 +231,9 @@ def get_file_content(filename):
             index += 1
         else:
             content[index] += char
-    return content
+    if len(content) == 0 or None or content == [""]:
+        val = False
+    else:
+        val = content 
+    return val
 
