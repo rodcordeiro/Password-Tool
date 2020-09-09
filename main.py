@@ -1,7 +1,11 @@
-import backend, frontend, sys
+import sys
 
-from PyQt5.QtWidgets import *
 import qdarkgraystyle as dgs
+from PyQt5.QtWidgets import *
+
+import backend
+import frontend
+
 
 class MainWindow(frontend.Frontend):
     def __init__(self, *args, **kwargs):

@@ -212,3 +212,24 @@ def decrypt(key):
         tmp += char
     key = tmp
     return key
+
+def write(fname, text):
+    """Writes the text to a filename"""
+    f = open("fname", 'a')
+    f.write(repr(text) + "\n")
+    f.close()
+
+def get_file_content(filename):
+    """Return's The Content of the file, each line is contained as an item in a list"""
+    f = open(filename, "r")
+    content = [""]
+    index = 0
+    for char in f.readlines():
+        if char.endswith("\n"):
+            content[index] += char.replace("\n", "")
+            content.append("")
+            index += 1
+        else:
+            content[index] += char
+    return content
+
