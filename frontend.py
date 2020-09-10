@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 import sys, backend
 
+
 """This is where the Code for the Frontend will be"""
 class Frontend(QMainWindow):
     def __init__(self, *args, **kwargs): # Collect all the Init from QMainWidnow
@@ -46,8 +47,30 @@ class Frontend(QMainWindow):
         stored_password_action = QAction("My Passwords", self)
         stored_password_action.setStatusTip("Look At My Passwords")
 
+        # Generate the Settings Action 
+        settings_action = QAction("Settings", self)
+        settings_action.setStatusTip("App Settings")
+         
+        # Generate the store password page
         stored_password_action.triggered.connect(self.stored_password_Page)
         toolbar.addAction(stored_password_action)
+
+        # Connect the Click to the Page
+        settings_action.triggered.connect(self.settings_Page)
+        toolbar.addAction(settings_action)
+        
+        # Set the Default Page (when the user opens the app)
+        widget = QWidget()
+        layout = QVBoxLayout()
+        title = QLabel("<h1>Welcome to the</h1><h1>Password-Tool</h1>")
+        title.setAlignment(Qt.AlignCenter)
+        password_open = QLabel("Get Started")
+        password_open.setTextInteractionFlags(Qt.LinksAccessibleByMouse)
+        password_open.linkActivated.connect(self.make_passwd_Page)
+        layout.addWidget(password_open)
+        layout.addWidget(title)
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
 
 
     def make_passwd_Page(self, s):
@@ -66,11 +89,15 @@ class Frontend(QMainWindow):
         button.clicked.connect(self.make_password)
         self.password_output = QLabel(f"Password: {self.password_info}")
         self.password_output.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        save_button = QPushButton("Save")
+        save_button.clicked.connect(self.save_password)
 
         # Start adding widgets to the Layout Engine
         layout.addWidget(title)
         layout.addWidget(button)
-        layout.addWidget(self.password_output)
+        bottom.addWidget(self.password_output)
+        bottom.addWidget(save_button)
+        layout.addLayout(bottom)
 
         # Add the Layout to the widget
         widget.setLayout(layout)
@@ -158,19 +185,32 @@ class Frontend(QMainWindow):
         widget = QWidget()
         layout = QVBoxLayout()
         display = []
+        title = QLabel("Stored Passwords").setAlignment(Qt.AlignCenter)
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll.setWidgetResizable(True)
         if backend.get_file_content("passwords.passwd") == False:
-            layout.addWidget(QLabel("No Stored Passwords"))
+            layout.addWidget(QLabel("No Stored Passwords :("))
         else:
             for passkey in backend.get_file_content("passwords.passwd"):
-                display.append(QLabel(passkey).setTextInteractionFlags(Qt.TextSelectableByMouse))
+                object = QLabel(passkey)
+                object.setTextInteractionFlags(Qt.TextSelectableByMouse)
+                object.setAlignment(Qt.AlignCenter)
+                object.setAutoFillBackground(True)
+                object.setStyleSheet("QLabel {background-color: gray; color: white}")
+                display.append(object)
 
             for label in display:
                 layout.addWidget(label)
+            
+        layout.addWidget(title)
         widget.setLayout(layout)
         scroll.setWidget(widget)
         page = lambda: self.setCentralWidget(scroll)
         return page()
-        
+    
+    def settings_Page(self, s):
+        pass
 
     """This is where the Holders for the backend will Live"""
     def make_password(self, s):

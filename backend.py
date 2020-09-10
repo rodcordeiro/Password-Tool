@@ -164,7 +164,7 @@ def make_passphrase(phrase):
     """This Turns a phrase Into a Passphrase"""
 
     # Capitalize the Beginning of the Phrase
-    if len(phrase) == 0: or None:
+    if len(phrase) == 0 or None:
         return "Empty"
         
     ender = phrase[1:len(phrase)]
@@ -215,7 +215,7 @@ def decrypt(key):
 
 def write(fname, text):
     """Writes the text to a filename"""
-    f = open("fname", 'a')
+    f = open(fname, 'a')
     f.write(f"{repr(text)}\n")
     f.close()
 
