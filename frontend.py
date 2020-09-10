@@ -59,6 +59,7 @@ class Frontend(QMainWindow):
 
         # Create the Content of the page
         widget = QWidget()
+        bottom = QHBoxLayout()
         layout = QVBoxLayout()
         title = QLabel("Password Maker")
         button = QPushButton("Generate A Password")
