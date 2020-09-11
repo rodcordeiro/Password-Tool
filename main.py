@@ -3,22 +3,23 @@ import sys
 import qdarkgraystyle as dgs
 from PyQt5.QtWidgets import *
 
-import backend
+import backend as back
 import frontend
 
 
 class MainWindow(frontend.Frontend):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
+        self.backend = back.AppTools()
 
     def make_password(self, s):
-        self.password_info = backend.make_password()
+        self.password_info = self.backend.make_password()
         self.password_output.setText(f"Password: {self.password_info}")
     
     def check_password_if_button(self, s):
         """This does the exact same thing as below, except it is for button press instead"""
         holder = ""
-        self.password_info = backend.check_password_strength(self.password_input.text())
+        self.password_info = self.backend.check_password_strength(self.password_input.text())
         if self.password_info[0] == False:
             if self.password_info[1] == 5:
                 holder = "Dangerous"
@@ -38,7 +39,7 @@ class MainWindow(frontend.Frontend):
 
         """This does the exact same thing as above, except it is for return instead"""
         holder = ""
-        self.password_info = backend.check_password_strength(self.password_input.text())
+        self.password_info = self.backend.check_password_strength(self.password_input.text())
         if self.password_info[0] == False:
             if self.password_info[1] == 5:
                 holder = "Dangerous"
@@ -55,15 +56,15 @@ class MainWindow(frontend.Frontend):
         self.password_output.setText(f"Password Strength: {holder}")
     
     def make_passphrase_if_button(self, s):
-        self.password_info = backend.make_passphrase(self.password_input.text())
+        self.password_info = self.backend.make_passphrase(self.password_input.text())
         self.password_output.setText(f"Passphrase: {self.password_info}")
     
     def make_passphrase_if_return(self):
-        self.password_info = backend.make_passphrase(self.password_input.text())
+        self.password_info = self.backend.make_passphrase(self.password_input.text())
         self.password_output.setText(f"Passphrase: {self.password_info}")
 
     def save_password(self, s):
-        backend.write("passwords.passwd", self.password_info)
+        self.backend.write("passwords.passwd", self.password_info)
 app = QApplication(sys.argv)
 window = MainWindow()
 window.setStyleSheet(dgs.load_stylesheet())

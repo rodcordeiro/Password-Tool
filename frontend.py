@@ -1,7 +1,8 @@
 # Import Stuff
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
-import sys, backend
+import backend as back
+import sys
 
 
 """This is where the Code for the Frontend will be"""
@@ -14,6 +15,7 @@ class Frontend(QMainWindow):
         self.password_output = ""
         self.password_input = ""
         self.setWindowTitle("Password Tool")
+        self.backend = back.AppTools()
 
         # Create a ToolBar
         toolbar = QToolBar("Menu")
@@ -64,9 +66,8 @@ class Frontend(QMainWindow):
         layout = QVBoxLayout()
         title = QLabel("<h1>Welcome to the</h1><h1>Password-Tool</h1>")
         title.setAlignment(Qt.AlignCenter)
-        password_open = QLabel("Get Started")
-        password_open.setTextInteractionFlags(Qt.LinksAccessibleByMouse)
-        password_open.linkActivated.connect(self.make_passwd_Page)
+        password_open = QPushButton("Get Started")
+        password_open.clicked.connect(self.make_passwd_Page)
         layout.addWidget(password_open)
         layout.addWidget(title)
         widget.setLayout(layout)
@@ -189,16 +190,19 @@ class Frontend(QMainWindow):
         scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         scroll.setWidgetResizable(True)
-        if backend.get_file_content("passwords.passwd") == False:
+        if self.backend.get_file_content("passwords.passwd") == False:
             layout.addWidget(QLabel("No Stored Passwords :("))
         else:
-            for passkey in backend.get_file_content("passwords.passwd"):
-                object = QLabel(passkey)
-                object.setTextInteractionFlags(Qt.TextSelectableByMouse)
-                object.setAlignment(Qt.AlignCenter)
-                object.setAutoFillBackground(True)
-                object.setStyleSheet("QLabel {background-color: gray; color: white}")
-                display.append(object)
+            for passkey in self.backend.get_file_content("passwords.passwd"):
+                if passkey == "":
+                    pass
+                else:
+                    object = QLabel(passkey)
+                    object.setTextInteractionFlags(Qt.TextSelectableByMouse)
+                    object.setAlignment(Qt.AlignCenter)
+                    object.setAutoFillBackground(True)
+                    object.setStyleSheet("QLabel {background-color: gray; color: white}")
+                    display.append(object)
 
             for label in display:
                 layout.addWidget(label)
@@ -210,7 +214,19 @@ class Frontend(QMainWindow):
         return page()
     
     def settings_Page(self, s):
-        pass
+        scroll = QScrollArea()
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll.setWidgetResizable(True)
+        widget = QWidget()
+        layout = QVBoxLayout()
+        title = QLabel("Settings")
+        title.setAlignment(Qt.AlignCenter)
+        layout.addWidget(title)
+        widget.setLayout(layout)
+        scroll.setWidget(widget)
+        page = lambda: self.setCentralWidget(scroll)
+        return page()
 
     """This is where the Holders for the backend will Live"""
     def make_password(self, s):
