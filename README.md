@@ -8,3 +8,4 @@ Features:
 - Intuitive UI
 - Password Storage
 - Password Encryption & Decryption using an In-House Algorithm
+- Settings Feature
