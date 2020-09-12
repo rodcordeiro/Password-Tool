@@ -2,6 +2,7 @@ import sys
 
 import qdarkgraystyle as dgs
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QKeySequence
 
 import backend as back
 import frontend

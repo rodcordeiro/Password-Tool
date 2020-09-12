@@ -223,7 +223,7 @@ class AppTools:
         f.close()
 
     def get_file_content(self, filename):
-        """Return's The Content of the file, each line is contained as an item in a list"""
+        """Returns The Content of the file, each line is contained as an item in a list"""
         f = open(filename, "r")
         content = [""]
         index = 0
