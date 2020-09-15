@@ -49,26 +49,16 @@ class Frontend(QMainWindow):
         stored_password_action = QAction("My Passwords", self)
         stored_password_action.setStatusTip("Look At My Passwords")
 
-        # Generate the Settings Action 
-        settings_action = QAction("Settings", self)
-        settings_action.setStatusTip("App Settings")
          
         # Generate the store password page
         stored_password_action.triggered.connect(self.stored_password_Page)
         toolbar.addAction(stored_password_action)
-
-        # Connect the Click to the Page
-        settings_action.triggered.connect(self.settings_Page)
-        toolbar.addAction(settings_action)
         
         # Set the Default Page (when the user opens the app)
         widget = QWidget()
         layout = QVBoxLayout()
         title = QLabel("<h1>Welcome to the</h1><h1>Password-Tool</h1>")
         title.setAlignment(Qt.AlignCenter)
-        password_open = QPushButton("Get Started")
-        password_open.clicked.connect(self.make_passwd_Page)
-        layout.addWidget(password_open)
         layout.addWidget(title)
         widget.setLayout(layout)
         self.setCentralWidget(widget)
@@ -181,7 +171,8 @@ class Frontend(QMainWindow):
         return page()
     
     def stored_password_Page(self, s):
-        """This is where the stored Passwords Are Shown"""
+        """This is where the stored Passwords Are Displayed"""
+        # Scrollbar Stuff
         scroll = QScrollArea()
         widget = QWidget()
         layout = QVBoxLayout()
@@ -197,6 +188,7 @@ class Frontend(QMainWindow):
                 if passkey == "":
                     pass
                 else:
+                    # Add the passkey to the list of display stuff
                     object = QLabel(passkey)
                     object.setTextInteractionFlags(Qt.TextSelectableByMouse)
                     object.setAlignment(Qt.AlignCenter)
@@ -204,29 +196,22 @@ class Frontend(QMainWindow):
                     object.setStyleSheet("QLabel {background-color: gray; color: white}")
                     display.append(object)
 
-            for label in display:
-                layout.addWidget(label)
+            if display == []:
+                pass # To Avoid PyQt5 giving me beef
+            else:
+                # Add the contents of the password to the Display
+                for label in display:
+                    layout.addWidget(label)
             
         layout.addWidget(title)
         widget.setLayout(layout)
         scroll.setWidget(widget)
+
+
+        # Set the Info for the Page
         page = lambda: self.setCentralWidget(scroll)
         return page()
     
-    def settings_Page(self, s):
-        scroll = QScrollArea()
-        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        scroll.setWidgetResizable(True)
-        widget = QWidget()
-        layout = QVBoxLayout()
-        title = QLabel("Settings")
-        title.setAlignment(Qt.AlignCenter)
-        layout.addWidget(title)
-        widget.setLayout(layout)
-        scroll.setWidget(widget)
-        page = lambda: self.setCentralWidget(scroll)
-        return page()
 
     """This is where the Holders for the backend will Live"""
     def make_password(self, s):

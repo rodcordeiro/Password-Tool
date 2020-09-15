@@ -187,13 +187,14 @@ class AppTools:
             num += 1
         return phrase
 
+    
     def encrypt(self, key):
-        """Encrypt a String Value using In-House Encryption"""
+        """Encrypts a String Value using In-House Encryption"""
         key_length = len(key)
         key = list(key)
         for index in range(0, 201):
             try:
-                key[index] = ord(key[index])
+             key[index] = ord(key[index])
             except IndexError:
                 if index == key_length:
                     key.append("end")
@@ -202,7 +203,7 @@ class AppTools:
         return key
 
     def decrypt(self, key):
-        """Decrypt the In-House Encrypted Key"""
+        """Decrypts the In-House Encrypted Key"""
         tmp = []
         for index in range(0, 201):
             try:
@@ -212,14 +213,14 @@ class AppTools:
                 break
         tmp = ""
         for char in key:
-            tmp += char
+            tmp += char.replace("'", "")
         key = tmp
         return key
 
     def write(self, fname, text):
         """Writes the text to a filename"""
         f = open(fname, 'a')
-        f.write(f"{repr(text)}\n")
+        f.write(f"{self.encrypt(repr(text))}\n")
         f.close()
 
     def get_file_content(self, filename):
@@ -227,16 +228,25 @@ class AppTools:
         f = open(filename, "r")
         content = [""]
         index = 0
+        val = None
         for char in f.readlines():
             if char.endswith("\n"):
                 content[index] += char.replace("\n", "")
                 content.append("")
                 index += 1
             else:
-                content[index] += char
+                content[index] += self.decrypt(char)
         if len(content) == 0 or None or content == [""]:
             val = False
         else:
-            val = content
+            val = []
+            for key in content:
+                if key != "":
+                    key = self.decrypt(eval(key))
+                    val.append(key)
+                else:
+                    pass
+        val.reverse()
         return val
+
 

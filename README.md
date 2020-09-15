@@ -5,7 +5,12 @@ Features:
 - Deep Password Checking
 - Passphrase Creator
 - Password Generator
-- Intuitive UI
+- Intuitive and Consistent UI
 - Password Storage
 - Password Encryption & Decryption using an In-House Algorithm
-- Settings Feature
+
+## Installation:
+The Installation is simple, just open up the terminal and type:
+```
+git clone https://github.com/Code-Jym/Password-Tool.git
+```
