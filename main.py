@@ -2,7 +2,6 @@ import sys
 
 import qdarkgraystyle as dgs
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QKeySequence
 
 import backend as back
 import frontend
@@ -66,6 +65,8 @@ class MainWindow(frontend.Frontend):
 
     def save_password(self, s):
         self.backend.write("passwords.passwd", self.password_info)
+
+        
 app = QApplication(sys.argv)
 window = MainWindow()
 window.setStyleSheet(dgs.load_stylesheet())
