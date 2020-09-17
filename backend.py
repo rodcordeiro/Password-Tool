@@ -35,13 +35,13 @@ class AppTools:
     def update_unsafe_passwords_list(self):
         """Updates the List of Unsafe Passowords by Scraping A Website"""
         try:
-            # Empty the unsafe_passwords.passwd file
-            f = open("unsafe_passwords.passwd", "w")
+            # Empty the unsafe_passwords.txt file
+            f = open("unsafe_passwords.txt", "w")
             f.truncate()
             f.close()
 
             # Open it again
-            f = open("unsafe_passwords.passwd", "a")
+            f = open("unsafe_passwords.txt", "a")
 
             # Get the Website containing the password information
             response = requests.get("https://en.wikipedia.org/wiki/List_of_the_most_common_passwords")
@@ -76,11 +76,11 @@ class AppTools:
         """Checks the Strength of a given password"""
         self.update_unsafe_passwords_list()
 
-        f = open("unsafe_passwords.passwd", "r")
+        f = open("unsafe_passwords.txt", "r")
 
         safe = True
         unsafe_levels = 0
-        # First Check if the unsafe_passwords.passwd file is empty
+        # First Check if the unsafe_passwords.txt file is empty
         data = f.read()
         # If the Thing is empty
         if data == None or "":
@@ -225,7 +225,13 @@ class AppTools:
 
     def get_file_content(self, filename):
         """Returns The Content of the file, each line is contained as an item in a list"""
-        f = open(filename, "r")
+        try:
+            f = open(filename, "r")
+        except FileNotFoundError:
+            # Error Handling
+            f = open(filename, "w")
+            f.close()
+            f = open(filename, "r")
         content = [""]
         index = 0
         val = None
@@ -246,7 +252,8 @@ class AppTools:
                     val.append(key)
                 else:
                     pass
-        val.reverse()
+        if type(val) == list:
+            val.reverse()
         return val
 
 

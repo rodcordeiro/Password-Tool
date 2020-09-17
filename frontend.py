@@ -2,7 +2,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 import backend as back
-import sys
+from contextlib import contextmanager
+import sys, os
 
 
 """This is where the Code for the Frontend will be"""
@@ -62,6 +63,17 @@ class Frontend(QMainWindow):
         layout.addWidget(title)
         widget.setLayout(layout)
         self.setCentralWidget(widget)
+    
+    @contextmanager
+    def suppress_stdout(self):
+        with open(os.devnull, "w") as devnull:
+            old_stdout = sys.stdout
+            sys.stdout = devnull
+            try:
+                yield
+            finally:
+                sys.stdout = old_stdout
+
 
 
     def make_passwd_Page(self, s):
@@ -172,45 +184,45 @@ class Frontend(QMainWindow):
     
     def stored_password_Page(self, s):
         """This is where the stored Passwords Are Displayed"""
-        # Scrollbar Stuff
-        scroll = QScrollArea()
-        widget = QWidget()
-        layout = QVBoxLayout()
-        display = []
-        title = QLabel("Stored Passwords").setAlignment(Qt.AlignCenter)
-        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        scroll.setWidgetResizable(True)
-        if self.backend.get_file_content("passwords.passwd") == False:
-            layout.addWidget(QLabel("No Stored Passwords :("))
-        else:
-            for passkey in self.backend.get_file_content("passwords.passwd"):
-                if passkey == "":
-                    pass
-                else:
-                    # Add the passkey to the list of display stuff
-                    object = QLabel(passkey)
-                    object.setTextInteractionFlags(Qt.TextSelectableByMouse)
-                    object.setAlignment(Qt.AlignCenter)
-                    object.setAutoFillBackground(True)
-                    object.setStyleSheet("QLabel {background-color: gray; color: white}")
-                    display.append(object)
-
-            if display == []:
-                pass # To Avoid PyQt5 giving me beef
+        with self.suppress_stdout():
+            # Scrollbar Stuff
+            scroll = QScrollArea()
+            widget = QWidget()
+            layout = QVBoxLayout()
+            display = []
+            title = QLabel("Stored Passwords").setAlignment(Qt.AlignCenter)
+            scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+            scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+            scroll.setWidgetResizable(True)
+            if self.backend.get_file_content("passwords.txt") == False:
+                layout.addWidget(QLabel("No Stored Passwords :("))
             else:
-                # Add the contents of the password to the Display
-                for label in display:
-                    layout.addWidget(label)
+                for passkey in self.backend.get_file_content("passwords.txt"):
+                    if passkey == "":
+                        pass
+                    else:
+                        # Add the passkey to the list of display stuff
+                        objects = QLabel(passkey)
+                        objects.setTextInteractionFlags(Qt.TextSelectableByMouse)
+                        objects.setAlignment(Qt.AlignCenter)
+                        objects.setAutoFillBackground(True)
+                        objects.setStyleSheet("QLabel {background-color: gray; color: white}")
+                        display.append(objects)
+
+                if display == []:
+                    pass # To Avoid PyQt5 giving me beef
+                else:
+                    # Add the contents of the password to the Display
+                    for label in display:
+                        layout.addWidget(label)
             
-        layout.addWidget(title)
-        widget.setLayout(layout)
-        scroll.setWidget(widget)
+            layout.addWidget(title)
+            widget.setLayout(layout)
+            scroll.setWidget(widget)
 
-
-        # Set the Info for the Page
-        page = lambda: self.setCentralWidget(scroll)
-        return page()
+            # Set the Info for the Page
+            page = lambda: self.setCentralWidget(scroll)
+            return page()
     
 
     """This is where the Holders for the backend will Live"""
@@ -230,4 +242,4 @@ class Frontend(QMainWindow):
         pass
 
     def save_password(self, s):
-        print("Password Saved")
+        pass

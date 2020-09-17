@@ -64,7 +64,7 @@ class MainWindow(frontend.Frontend):
         self.password_output.setText(f"Passphrase: {self.password_info}")
 
     def save_password(self, s):
-        self.backend.write("passwords.passwd", self.password_info)
+        self.backend.write("passwords.txt", self.password_info)
 
         
 app = QApplication(sys.argv)

@@ -10,15 +10,19 @@ Features:
 - Password Encryption & Decryption using an In-House Algorithm 
 
 ## Installation:
-The Installation is simple, just open up the terminal and type:
+### Assumptions:
+- You have linux as your operating system
+- You have Python 3 or above
+
+
+The download is simple, just open up the terminal and type in:
 ```
 git clone https://github.com/Code-Jym/Password-Tool.git
 ```
-Then to Finish Installation Type:
+Then to installation the app on your system, type:
 ```
-cd Password-Tool
-python3.8 password_start.py
+python3.8 Password-Tool/password-tool-setup.py
 ```
-The `python3.8` command can be replaced with your python run file command
+The `python3.8` command can be replaced with the python run file command for your python version
 
-After running the command, answer the question and wait for the app to pop up.
+After running the command, answer the questions and wait for the app to pop up.
