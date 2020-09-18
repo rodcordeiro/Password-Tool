@@ -23,3 +23,6 @@ The to run the app type:
 ```
 ./ptool.sh
 ```
+Note:
+- I don't know how to officially set up apps
+- You have to type the command every time you want the app
