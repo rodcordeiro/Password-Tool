@@ -1,4 +1,4 @@
-import sys
+import sys, password_tool_setup
 
 import qdarkgraystyle as dgs
 from PyQt5.QtWidgets import *
