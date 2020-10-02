@@ -233,13 +233,11 @@ class AppTools:
             f.close()
             f = open(filename, "r")
         content = [""]
-        index = 0
         val = None
-        for char in f.readlines():
+        for index, char in enumerate(f.readlines()):
             if char.endswith("\n"):
                 content[index] += char.replace("\n", "")
                 content.append("")
-                index += 1
             else:
                 content[index] += self.decrypt(char)
         if len(content) == 0 or None or content == [""]:
